@@ -3,7 +3,6 @@ import {
   Box,
   Typography,
   TextField,
-  Grid,
   Card,
   CardContent,
   CardActions,
@@ -124,10 +123,17 @@ const FormList: React.FC = () => {
           No forms match your search criteria.
         </Alert>
       ) : (
-        <Grid container spacing={3}>
+        <Box sx={{
+          display: 'grid',
+          gridTemplateColumns: {
+            xs: '1fr',
+            sm: 'repeat(2, 1fr)',
+            md: 'repeat(3, 1fr)'
+          },
+          gap: 3
+        }}>
           {filteredForms.map((form) => (
-            <Grid item xs={12} sm={6} md={4} key={form.id}>
-              <Card elevation={2} sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+            <Card key={form.id} elevation={2} sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography variant="h6" gutterBottom noWrap>
                     {form.name}
@@ -200,9 +206,8 @@ const FormList: React.FC = () => {
                   </IconButton>
                 </CardActions>
               </Card>
-            </Grid>
           ))}
-        </Grid>
+        </Box>
       )}
 
       {/* Delete Confirmation Dialog */}

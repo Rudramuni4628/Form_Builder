@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Grid,
   Paper,
   Typography,
   Box,
@@ -74,9 +73,18 @@ const FormBuilder: React.FC = () => {
 
   return (
     <Box sx={{ height: '80vh', overflow: 'hidden' }}>
-      <Grid container spacing={2} sx={{ height: '100%' }}>
+      <Box sx={{
+        display: 'flex',
+        gap: 2,
+        height: '100%',
+        flexDirection: { xs: 'column', md: 'row' }
+      }}>
         {/* Field Palette */}
-        <Grid item xs={12} lg={3} md={4}>
+        <Box sx={{
+          width: { xs: '100%', md: '300px' },
+          minWidth: '250px',
+          height: { xs: '300px', md: '100%' }
+        }}>
           <Paper sx={{ p: 2, height: '100%', overflow: 'hidden' }}>
             <Typography variant="h6" gutterBottom>
               Field Types
@@ -85,10 +93,14 @@ const FormBuilder: React.FC = () => {
               <FieldPalette />
             </Box>
           </Paper>
-        </Grid>
+        </Box>
 
         {/* Form Canvas */}
-        <Grid item xs={12} lg={6} md={5}>
+        <Box sx={{
+          flexGrow: 1,
+          minWidth: 0,
+          height: { xs: '400px', md: '100%' }
+        }}>
           <Paper sx={{ p: 2, height: '100%', display: 'flex', flexDirection: 'column' }}>
             <Box sx={{
               display: 'flex',
@@ -167,10 +179,14 @@ const FormBuilder: React.FC = () => {
               )}
             </Box>
           </Paper>
-        </Grid>
+        </Box>
 
         {/* Field Editor */}
-        <Grid item xs={12} lg={3} md={3}>
+        <Box sx={{
+          width: { xs: '100%', md: '300px' },
+          minWidth: '250px',
+          height: { xs: '400px', md: '100%' }
+        }}>
           <Paper sx={{ p: 2, height: '100%', overflow: 'hidden' }}>
             <Typography variant="h6" gutterBottom>
               Field Properties
@@ -185,8 +201,8 @@ const FormBuilder: React.FC = () => {
               )}
             </Box>
           </Paper>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
 
       {/* New Form Dialog */}
       <Dialog open={isNewFormDialogOpen} onClose={() => setIsNewFormDialogOpen(false)} maxWidth="sm" fullWidth>
