@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useForm, Controller, useWatch } from 'react-hook-form';
+import React, { useEffect, useCallback } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {
@@ -135,7 +135,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ form }) => {
   const watchedValues = watch();
 
   // Calculate derived field values
-  const calculateDerivedValue = (field: FormField): any => {
+  const calculateDerivedValue = useCallback((field: FormField): any => {
     if (!field.isDerived || !field.derivedConfig) return '';
 
     const { parentFieldIds, formulaType, formula } = field.derivedConfig;
@@ -188,7 +188,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ form }) => {
       default:
         return '';
     }
-  };
+  }, [watchedValues]);
 
   // Update derived fields when parent values change
   useEffect(() => {
@@ -198,7 +198,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ form }) => {
         setValue(field.id, calculatedValue);
       }
     });
-  }, [watchedValues, setValue]);
+  }, [watchedValues, setValue, calculateDerivedValue, form.fields]);
 
   const onSubmit = async (data: any) => {
     // Simulate form submission
